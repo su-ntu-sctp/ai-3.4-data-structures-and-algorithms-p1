@@ -1,350 +1,228 @@
-# 3.4 Data Structures and Algorithms — Part 1
+# Lesson 3.4: Data Structures and Algorithms (Part 1)
 
 ## Lesson Overview
-Data structures and algorithms form the foundation of efficient software development. A **data structure** defines how data is organized, while an **algorithm** defines the logical steps used to process that data. In modern backend systems, choosing the right structure directly impacts performance and scalability.
+This lesson introduces fundamental data structures used in Java programming — Arrays, ArrayList, LinkedList, HashMap, and HashSet. Students will learn how these structures organize and store data efficiently, how to perform basic operations on them, and how to understand their performance using time complexity concepts. By mastering these foundational structures, learners gain the skills to design optimized programs that can handle data systematically.
 
-In this lesson, we focus on **linear data structures** (Array, ArrayList, LinkedList) and **hash-based data structures** (HashMap, HashSet) using a consistent **Product Inventory** theme — where each `Product` has an `id`, `name`, `price`, and `category`. You’ll learn how to create, manipulate, and compare these structures, and how simple algorithms (searching, counting, deduplication) operate on them.
-
+**Module:** 3.4  
 **Duration:** 3 hours  
-**Module:** 3 – Backend Development : Server-Side Programming 
-**Lesson:** 3.4  
-**Prerequisites:** Java basics (variables, data types), control flow, and methods.
+**Prerequisites:** Basic Java syntax, variables, operators, loops, and control flow.
 
 ---
 
 ## Lesson Objectives
-By the end of this lesson, you will be able to:
-- **Explain** how Arrays, ArrayLists, LinkedLists, HashMaps, and HashSets organize data.
-- **Implement** and **manipulate** these structures using Java 21 features where relevant (`var`, `List.of`, `Map.of`).
-- **Apply** simple algorithms (search, count, deduplicate) on these structures.
-- **Compare** linear vs. hash-based structures and **choose** the appropriate one for a given use case.
+
+By the end of this lesson, students will be able to:
+- Define and differentiate between linear and hash-based data structures.
+- Implement and manipulate Arrays, ArrayLists, LinkedLists, HashMaps, and HashSets.
+- Apply appropriate data structures for various problem types.
+- Analyze the performance of operations using Big O notation.
 
 ---
 
 ## Part 1: Introduction to Data Structures
 
-### What Are Data Structures?
-A **data structure** is a strategy for organizing and storing data so that operations like search, insert, update, and delete can be performed efficiently. Different structures optimize for different operations; there is no one-size-fits-all. In a **Product Inventory** system, you might need fast lookup by product ID, quick additions/removals, or protection against duplicates — each need points to a different structure.
+Data structures are containers that organize and store data efficiently so it can be accessed and modified effectively. Choosing the right data structure affects how quickly and efficiently a program can process data. For example, retrieving a record from a list of 10 items may seem trivial, but when the same operation scales to millions of records, efficiency becomes critical.
 
-### Types Covered in This Lesson
-- **Linear structures** — Arrays, ArrayLists, LinkedLists (ordered, sequential access/iteration).
-- **Hash-based structures** — HashMaps, HashSets (fast lookups using hashing).
+In Java, data structures are broadly divided into two types:
+1. **Linear Data Structures** – Elements are arranged sequentially (Arrays, ArrayLists, LinkedLists).
+2. **Hash-Based Data Structures** – Elements are stored using hash codes (HashMap, HashSet).
 
-> We’ll practice with a `Product` type: `id` (int), `name` (String), `price` (double), `category` (String).
+Each structure comes with trade-offs: some provide faster lookups, while others are easier to insert or remove elements.
 
 ---
 
 ## Part 2: Linear Data Structures
 
-# Linear Data Structures
-
-A **linear data structure** is a type of data structure in which elements are **arranged sequentially**, one after another, and each element is connected to its previous and next element (except the first and last ones).
-
-In a linear data structure, **data elements are stored in a single level (one-dimensional order)**, and they can be traversed in a single run (usually from the first element to the last). The memory allocation for these structures can be **contiguous (arrays)** or **non-contiguous (linked lists)**, but the logical order remains linear.
-
----
-
-## Key Characteristics
-- Elements are **arranged in a sequential order**.  
-- Every element has a **unique predecessor and successor**, except the first and last.  
-- Traversal is typically **one-way (linear)**.  
-- Examples: **Array, Linked List, Stack, Queue**
-
----
-
 ### Arrays
-Arrays store elements **contiguously in memory** and provide **indexed** (0-based) random access. They are memory-efficient and fast to read by index, but their size is **fixed**. Insertions/removals in the middle require shifting, which is O(n). Use arrays when the number of elements is known and static (e.g., fixed list of price caps).
 
+An **Array** is a fixed-size, indexed collection of elements of the same data type. It stores data in contiguous memory locations, which allows direct access using indices. Arrays are ideal for storing a known number of elements but cannot grow dynamically.
 
-#### Example — Product Prices Using Arrays
 ```java
-public class ArrayPricesDemo {
+public class LearnArrays {
   public static void main(String[] args) {
-    double[] prices = { 999.0, 499.5, 299.0, 199.99 };
+    int[] productPrices = {999, 499, 299, 199, 129};
 
-    // Access by index
-    System.out.println("First price: $" + prices[0]);
-
-    // Update
-    prices[2] = 279.0;
-
-    // Traverse
-    for (int i = 0; i < prices.length; i++) {
-      System.out.println("Price[" + i + "] = $" + prices[i]);
+    System.out.println("Array elements:");
+    for (int i = 0; i < productPrices.length; i++) {
+      System.out.println("Index " + i + ": " + productPrices[i]);
     }
   }
 }
 ```
 
-#### Simple Linear Search (Array)
-```java
-public static int indexOfPrice(double[] prices, double target) {
-  for (int i = 0; i < prices.length; i++) {
-    if (prices[i] == target) {
-      return i;
-    }
-  }
-  return -1; // not found
-}
-```
+Arrays provide **O(1)** access time because elements can be directly indexed, but searching or inserting in the middle is **O(n)** since elements must be shifted.
 
-#### 👨‍💻 Activity — Array Search
-- Create an array of product prices.  
-- Ask the user to enter a price.  
-- Print the index if found; otherwise print “Price not found.”
+### 👨‍💻 Activity: Working with Arrays
+Write a program that stores five product stock quantities in an array and prints:
+1. All stock values.
+2. The total stock count.
+3. The highest and lowest stock values.
 
 ---
 
 ### ArrayList
-An **ArrayList** is a **resizable array**. It keeps elements in order and grows automatically as new items are added. It provides O(1) access by index but slower insertions/removals in the middle due to shifting. ArrayLists are widely used because they are flexible, ordered, and simple to manipulate.
 
-#### Model Class (Product.java)
+An **ArrayList** is a resizable array implementation from the Java Collections Framework. Unlike arrays, its size grows automatically when elements are added. Internally, it still uses an array, but resizing is managed by Java.
+
 ```java
-public class Product {
-  public int id;
-  public String name;
-  public double price;
-  public String category;
+import java.util.ArrayList;
 
-  public Product(int id, String name, double price, String category) {
-    this.id = id;
-    this.name = name;
-    this.price = price;
-    this.category = category;
-  }
-
-  @Override
-  public String toString() {
-    return id + " - " + name + " ($" + price + ", " + category + ")";
-  }
-}
-```
-
-#### Example — Managing a Product Catalog with ArrayList
-```java
-import java.util.*;
-
-public class ArrayListCatalogDemo {
+public class LearnArrayList {
   public static void main(String[] args) {
-    var inventory = new ArrayList<Product>(List.of(
-      new Product(101, "Laptop Pro", 1299.0, "Electronics"),
-      new Product(102, "Wireless Mouse", 29.99, "Accessories"),
-      new Product(103, "Mechanical Keyboard", 89.5, "Accessories")
-    ));
+    ArrayList<String> productNames = new ArrayList<>();
+    productNames.add("Laptop");
+    productNames.add("Phone");
+    productNames.add("Tablet");
 
-    // Add new product
-    inventory.add(new Product(104, "4K Monitor", 299.0, "Electronics"));
-
-    // Iterate
-    for (var p : inventory) {
-      System.out.println(p);
+    System.out.println("Product List:");
+    for (String item : productNames) {
+      System.out.println(item);
     }
 
-    // Search and update
-    for (var p : inventory) {
-      if (p.id == 102) {
-        p.price = 34.99;
-      }
-    }
-
-    // Remove discontinued items
-    inventory.removeIf(p -> p.price < 30);
-
-    System.out.println("Updated Inventory:");
-    inventory.forEach(System.out::println);
+    productNames.remove("Phone");
+    System.out.println("After removal: " + productNames);
   }
 }
 ```
 
-#### 👨‍💻 Activity — ArrayList Manipulation
-- Create an ArrayList of 5–6 `Product`s.  
-- Add, remove, and update some products.  
-- Print the inventory before and after.
+ArrayLists provide **O(1)** access by index but slower insertion/removal in the middle (**O(n)**). They are preferred when frequent random access is needed.
+
+### 👨‍💻 Activity: ArrayList Operations
+Create an ArrayList of five grocery items.  
+- Add and remove items.
+- Print the total count of items.
+- Check whether a specific item exists using `.contains()`.
 
 ---
 
 ### LinkedList
-A **LinkedList** stores elements in **nodes**. Each node holds data and a reference to the next (and in Java’s `LinkedList`, also previous) node. Insertion/removal at the **head or tail** is efficient; random access by index is **slower**. Use it when you frequently add/remove at ends or use queue/deque patterns.
 
-#### Example — Recently Viewed Products (as a deque)
+A **LinkedList** stores elements as nodes, where each node holds data and a reference to the next node. It does not require contiguous memory, allowing faster insertions and deletions than arrays.
+
 ```java
 import java.util.LinkedList;
 
-public class LinkedListRecentDemo {
+public class LearnLinkedList {
   public static void main(String[] args) {
-    var recent = new LinkedList<String>();
+    LinkedList<String> recentlyViewed = new LinkedList<>();
 
-    recent.addFirst("Laptop Pro");
-    recent.addFirst("4K Monitor");
-    recent.addFirst("Wireless Mouse"); // most recent at front
+    recentlyViewed.add("Mouse");
+    recentlyViewed.add("Keyboard");
+    recentlyViewed.add("Monitor");
 
-    System.out.println("Recent views: " + recent);
+    System.out.println("Recently viewed: " + recentlyViewed);
 
-    // keep only the last 5
-    while (recent.size() > 5) {
-      recent.removeLast();
-    }
+    recentlyViewed.addFirst("Charger");
+    recentlyViewed.removeLast();
 
-    recent.addFirst("Mechanical Keyboard");
-    System.out.println("Updated list: " + recent);
+    System.out.println("Updated list: " + recentlyViewed);
   }
 }
 ```
 
-#### 👨‍💻 Activity — Recent History Tracker
-Create a `LinkedList<String>` to store up to the 5 most recently viewed products.  
-When a 6th item is added, remove the oldest one. Print after each operation.
+LinkedLists offer **O(1)** insertion and deletion at ends but **O(n)** access because traversal is sequential.
+
+### 👨‍💻 Activity: Simulating Recent Items
+Write a LinkedList program to simulate “recently viewed items.” Add five items, remove the oldest when adding a sixth, and display the list.
 
 ---
 
 ## Part 3: Hash-Based Data Structures
 
 ### HashMap
-A **HashMap** stores key–value pairs and uses **hashing** to determine the storage bucket. Under typical conditions, `put/get/containsKey/remove` are **O(1)** on average. Collisions are handled internally (linked lists or tree bins). Use `HashMap` for **fast lookup by key**, e.g., `id → Product`.
 
-#### Example — Inventory by Product ID
+A **HashMap** stores data as key–value pairs. Each key is unique and is assigned a hash code that determines where it is stored internally. This allows extremely fast lookups.
+
 ```java
-import java.util.*;
+import java.util.HashMap;
 
-public class HashMapInventoryDemo {
+public class LearnHashMap {
   public static void main(String[] args) {
-    var inventory = new HashMap<Integer, Product>(Map.of(
-      101, new Product(101, "Laptop Pro", 1299.0, "Electronics"),
-      102, new Product(102, "Wireless Mouse", 29.99, "Accessories"),
-      103, new Product(103, "Keyboard", 89.5, "Accessories")
-    ));
-    // Map.of returns an immutable map, but we wrap it in a new HashMap to make it mutable.
+    HashMap<Integer, String> inventory = new HashMap<>();
 
-    // Add or update
-    inventory.put(104, new Product(104, "4K Monitor", 299.0, "Electronics"));
-    inventory.put(102, new Product(102, "Wireless Mouse", 34.99, "Accessories")); // updated
+    inventory.put(101, "Laptop");
+    inventory.put(102, "Phone");
+    inventory.put(103, "Tablet");
 
-    // Retrieve and print
-    System.out.println("Fetch by ID 104: " + inventory.get(104));
+    System.out.println("All items: " + inventory);
+    System.out.println("Item with ID 102: " + inventory.get(102));
 
-    // Iterate entries
-    for (var e : inventory.entrySet()) {
-      System.out.println(e.getKey() + " => " + e.getValue());
-    }
-
-    // Remove
     inventory.remove(103);
+    System.out.println("Updated inventory: " + inventory);
   }
 }
 ```
 
-#### Algorithm — Count by Category (Frequency Map)
-```java
-import java.util.*;
+A HashMap provides **O(1)** average-time complexity for insertion and retrieval operations due to hashing, though in rare cases (hash collisions), performance can degrade to **O(n)**.
 
-public static Map<String, Integer> countByCategory(List<Product> products) {
-  var countMap = new HashMap<String, Integer>();
-  for (var p : products) {
-    countMap.put(p.category, countMap.getOrDefault(p.category, 0) + 1);
-  }
-  return countMap;
-}
-```
+---
 
-#### 👨‍💻 Activity — Category Counter
-Create a list of 8+ products (mixed categories). Build a `Map<String,Integer>` of **category → count** and print a summary sorted by category.
+## Understanding Time Complexity and Big O Notation
+
+**Time complexity** measures how the runtime of an algorithm grows relative to input size. It allows developers to predict the scalability of their code. The **Big O notation** expresses this growth using mathematical symbols.
+
+| Big O | Name | Meaning | Example Operation |
+|-------|------|----------|-------------------|
+| O(1) | Constant | Takes the same time regardless of data size | Accessing an element by index in an array |
+| O(n) | Linear | Time increases proportionally with data | Searching an unsorted list |
+| O(log n) | Logarithmic | Time grows slowly even as data grows | Binary search in a sorted array |
+| O(n²) | Quadratic | Time grows rapidly as input increases | Nested loops |
+
+Understanding Big O helps programmers choose the right data structure. For example:
+- Accessing an item in an **ArrayList** is O(1).
+- Searching an **unsorted array** is O(n).
+- Retrieving data from a **HashMap** is typically O(1).
+
+---
+
+### 👨‍💻 Activity: Analyzing Complexity
+Write a program to compare ArrayList search versus HashMap lookup for 10,000 elements and observe the performance difference.
 
 ---
 
 ### HashSet
-A **HashSet** stores **unique elements** and is backed by a `HashMap` internally (values are dummy). It is optimized for **fast membership checks** and **deduplication**. It does **not** maintain order. Use `HashSet` when you care about uniqueness — e.g., set of categories or SKUs.
 
-#### Example — Unique Categories
+A **HashSet** stores unique elements without duplicates. Internally, it uses a HashMap to manage entries efficiently. HashSet is ideal for maintaining a list of distinct values, such as unique user IDs or product SKUs.
+
 ```java
-import java.util.*;
+import java.util.HashSet;
 
-public class HashSetCategoriesDemo {
+public class LearnHashSet {
   public static void main(String[] args) {
-    var categories = List.of(
-      "Electronics", "Accessories", "Home", "Accessories", "Home", "Beauty"
-    );
+    HashSet<String> categories = new HashSet<>();
+    categories.add("Electronics");
+    categories.add("Clothing");
+    categories.add("Electronics"); // duplicate ignored
 
-    var unique = new HashSet<>(categories);
-    System.out.println("Unique categories: " + unique);
-
-    // Membership check
-    System.out.println("Has 'Electronics'? " + unique.contains("Electronics"));
+    System.out.println("Categories: " + categories);
   }
 }
 ```
 
-#### Deduplicate Product Names with HashSet
-```java
-import java.util.*;
+HashSet provides **O(1)** insertion and lookup on average.
 
-public static List<String> uniqueNames(List<String> names) {
-  return new ArrayList<>(new HashSet<>(names));
-}
-```
-
-#### 👨‍💻 Activity — Deduplication
-Given a list of product names (with duplicates), remove duplicates using a `HashSet` and print the unique names.  
-**Bonus:** Convert back to a List and sort alphabetically.
+### 👨‍💻 Activity: Removing Duplicates
+Create a HashSet from an ArrayList of product names (with duplicates). Display the unique product names after conversion.
 
 ---
 
-## Part 4: Algorithms on Data Structures
-An **algorithm** is a finite, ordered sequence of steps that transforms inputs into outputs. It should be **finite**, **deterministic**, **effective**, and have defined **input** and **output**. Algorithms are what make data structures *useful* — they define how we search, count, or modify data.
+## Part 4: Comparison and Summary
 
+| Data Structure | Type | Ordered | Allows Duplicates | Access | Insertion/Removal | Typical Use |
+|----------------|------|----------|-------------------|---------|-------------------|-------------|
+| Array | Linear | Yes | Yes | O(1) | O(n) | Fixed-size sequential data |
+| ArrayList | Linear | Yes | Yes | O(1) | O(n) | Dynamic list with fast access |
+| LinkedList | Linear | Yes | Yes | O(n) | O(1) at ends | Frequent insert/delete |
+| HashMap | Hash-Based | No | Keys unique | O(1) | O(1) | Key–value mappings |
+| HashSet | Hash-Based | No | No | O(1) | O(1) | Unique collections |
 
-### Example A — Find Product by ID (List)
-```java
-import java.util.*;
-
-public static Product findById(List<Product> list, int id) {
-  for (var p : list) {
-    if (p.id == id) return p;
-  }
-  return null;
-}
-```
-
-### Example B — Count by Category (List → HashMap)
-```java
-import java.util.*;
-
-public static Map<String, Integer> summarizeCategories(List<Product> list) {
-  var counts = new HashMap<String, Integer>();
-  for (var p : list) {
-    counts.put(p.category, counts.getOrDefault(p.category, 0) + 1);
-  }
-  return counts;
-}
-```
-
-### Example C — Remove Discontinued (ArrayList)
-```java
-import java.util.*;
-
-public static void removeDiscontinued(List<Product> inventory) {
-  inventory.removeIf(p -> p.price <= 0.0); // treat <=0 as discontinued
-}
-```
+### Key Takeaways
+- Arrays are fixed in size but fast for access.
+- ArrayLists provide flexibility and are easy to use.
+- LinkedLists allow fast insertion and removal but slower random access.
+- HashMaps and HashSets rely on hashing for extremely fast lookups.
+- Understanding Big O helps make performance-conscious design choices.
 
 ---
 
-## Part 5: Comparison and Summary
-
-### Quick Comparison
-
-| Data Structure | Category   | Ordered | Duplicates | Key Strength                    | Typical Use Case                         |
-|----------------|------------|---------|------------|----------------------------------|------------------------------------------|
-| Array          | Linear     | Yes     | Yes        | Fast index access; compact       | Fixed-size lists (e.g., static price tiers) |
-| ArrayList      | Linear     | Yes     | Yes        | Resizable; easy to use; indexed  | Dynamic catalogs; general list scenarios |
-| LinkedList     | Linear     | Yes     | Yes        | Fast add/remove at ends          | Recent history; queues/deques            |
-| HashMap        | Hash-based | No      | Keys uniq. | Fast key lookup; key→value map   | `id → Product`, category counts          |
-| HashSet        | Hash-based | No      | No         | Uniqueness; fast membership      | Unique categories; deduplication         |
-
-### Summary
-- **Linear structures** preserve order and support straightforward iteration; use **ArrayList** for most lists, **Array** for fixed-size, and **LinkedList** for frequent end-insert/remove patterns.  
-- **Hash-based structures** provide **fast lookup**: use **HashMap** for key→value associations and **HashSet** for uniqueness.  
-- Algorithms such as **search**, **count**, and **deduplicate** are natural operations over these structures and prepare you for deeper topics like sorting, searching efficiency (Big-O), and trees/graphs in later lessons.
-
----
-
-
+**End of Lesson 3.4**
