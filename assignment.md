@@ -1,34 +1,32 @@
 # Assignment (Optional)
 
 ## Brief
-[1–2 sentences: what to build and the expected outcome.]
 
-## Tasks
-- [Task 1]
-- [Task 2]
-- [Optional extension]
+Create a program called DataStructuresAssignment.java and solve the following problems using Arrays, ArrayList, LinkedList, HashMap, and HashSet.
 
-## Setup
-- [Starter/template link if any]
-- [Install & run steps (3–5 lines)]
-- [Sample I/O or endpoints]
+1. **Product Inventory Manager (ArrayList)**
+   - Create an ArrayList to store 5 product names.
+   - Add two more products to the list.
+   - Remove one product from the list.
+   - Print the total number of products and display all product names.
 
-## Deliverables (if submitting)
-- GitHub repo URL
-- README (setup, notes, screenshots)
-- Demo link (optional)
+2. **Shopping Cart with Recently Viewed Items (LinkedList)**
+   - Create a LinkedList to simulate "recently viewed items" in an e-commerce store.
+   - Add 6 items to the list.
+   - When the 6th item is added, automatically remove the oldest item (keep only 5 recent items).
+   - Display the final list of recently viewed items.
 
-## AI & Tools
-- Tools: [ChatGPT/Copilot/etc.]
-- Assisted with: [tests/docs/code]
-- Validation: [tests/manual checks]
-- Attribution: [links to adapted sources]
+3. **Student Grades Manager (HashMap and HashSet)**
+   - Create a HashMap to store student names (as keys) and their grades (as values).
+   - Add at least 5 students with their grades.
+   - Print the grade of a specific student by name.
+   - Create a HashSet to store unique course codes (e.g., "CS101", "MATH201").
+   - Add 5 course codes, including one duplicate, and display the unique courses.
 
-## Collaboration
-- Discuss ideas, submit your own work; credit classmates/sources.
+## Submission (Optional)
 
-## Submission (optional)
-- Submit repo URL to NTU Blackboard.
+- Submit the URL of the GitHub Repository that contains your work to NTU black board.
+- Should you reference the work of your classmate(s) or online resources, give them credit by adding either the name of your classmate or URL.
 
 ## References
 - Java: https://docs.oracle.com/javase/
