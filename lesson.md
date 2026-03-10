@@ -52,7 +52,7 @@ public class LearnArrays {
 
 Arrays provide **O(1)** access time because elements can be directly indexed, but searching or inserting in the middle is **O(n)** since elements must be shifted.
 
-### 👨‍💻 Activity: Working with Arrays
+### 👨‍💻 Activity: Working with Arrays **(5 minutes)**
 Write a program that stores five product stock quantities in an array and prints:
 1. All stock values.
 2. The total stock count.
@@ -87,7 +87,7 @@ public class LearnArrayList {
 
 ArrayLists provide **O(1)** access by index but slower insertion/removal in the middle (**O(n)**). They are preferred when frequent random access is needed.
 
-### 👨‍💻 Activity: ArrayList Operations
+### 👨‍💻 Activity: ArrayList Operations **(5 minutes)**
 Create an ArrayList of five grocery items.  
 - Add and remove items.
 - Print the total count of items.
@@ -122,7 +122,7 @@ public class LearnLinkedList {
 
 LinkedLists offer **O(1)** insertion and deletion at ends but **O(n)** access because traversal is sequential.
 
-### 👨‍💻 Activity: Simulating Recent Items
+### 👨‍💻 Activity: Simulating Recent Items **(5 minutes)**
 Write a LinkedList program to simulate “recently viewed items.” Add five items, remove the oldest when adding a sixth, and display the list.
 
 ---
@@ -155,6 +155,13 @@ public class LearnHashMap {
 
 A HashMap provides **O(1)** average-time complexity for insertion and retrieval operations due to hashing, though in rare cases (hash collisions), performance can degrade to **O(n)**.
 
+### 👨‍💻 Activity: Working with HashMap **(3 minutes)**
+Create a HashMap that stores three students and their scores (e.g. `"Alice" → 85`).
+- Retrieve and print the score for one student using `.get()`.
+- Update a student's score using `.put()` with the same key.
+- Remove one student using `.remove()`.
+- Print the final HashMap.
+
 ---
 
 ## Understanding Time Complexity and Big O Notation
@@ -175,10 +182,6 @@ Understanding Big O helps programmers choose the right data structure. For examp
 
 ---
 
-### 👨‍💻 Activity: Analyzing Complexity
-Write a program to compare ArrayList search versus HashMap lookup for 10,000 elements and observe the performance difference.
-
----
 
 ### HashSet
 
@@ -201,7 +204,7 @@ public class LearnHashSet {
 
 HashSet provides **O(1)** insertion and lookup on average.
 
-### 👨‍💻 Activity: Removing Duplicates
+### 👨‍💻 Activity: Removing Duplicates **(3 minutes)**
 Create a HashSet from an ArrayList of product names (with duplicates). Display the unique product names after conversion.
 
 ---
