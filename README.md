@@ -1,43 +1,32 @@
-# Lesson Repo Template
+# [3.4] Data Structures and Algorithms (Part 1)
 
-Template for creating lesson repositories under **su-ntu-sctp**.
+## Lesson Overview
+![Title](./assets/images/infographic-3.4-data-structures.png)
 
-## Naming (Option A)
-`5/3m-<track>-<module>.<lesson>-<topic-slug>`  
-**Examples**
-`5/3m-ai-3.1-java-intro`
+## Dependencies
+- [Self Studies](./studies.md)
+- [Lesson](./lesson.md)
+- [Assignment](./assignment.md)
+- [Slide Deck](./slides.md)
 
-## Naming (Option B) 
+## Lesson Objectives
+* **Define and differentiate** between linear and hash-based data structures in Java
+* **Implement and manipulate** Arrays, ArrayLists, LinkedLists, HashMaps, and HashSets to store and manage data
+* **Apply appropriate data structures** for various problem types based on their performance characteristics
+* **Analyze operation performance** using Big O notation to make informed design decisions
 
-`<track>-<module>.<lesson>-<topic-slug>`
+## Lesson Plan
 
-**Examples**
-`ai-3.1-java-intro`
-
-
-## Structure
-```text
-.
-├─ README.md
-├─ lesson.md
-├─ assignment.md
-├─ quiz.md
-├─ studies.md
-├─ slides/
-│  └─ placeholder.txt
-├─ assets/
-│  ├─ images/
-│  └─ data/
-└─ .gitignore
-```
-
-
-## Use This Template
-1) Click **Use this template → Create new repository**  
-2) Name it using the convention above  
-3) Clone, edit files, commit, push
-
-## Notes
-- Put slides in `slides/` (pptx/pdf)  
-- Images in `assets/images/`, data in `assets/data/`  
-- Each file contains its own authoring instructions (open and follow the checklists inside)
+| Duration | What | How or Why |
+|----------|------|------------|
+| 10 min | Warm up | Recap previous lesson |
+| 15 min | Part 1: Introduction to Data Structures | Explain linear vs hash-based structures and why data structure choice matters |
+| 25 min | Part 2: Arrays | Teach fixed-size indexed arrays with code-along; activity |
+| 25 min | Part 2: ArrayList | Teach dynamic resizable lists with code-along; activity |
+| 20 min | Part 2: LinkedList | Teach node-based structure with code-along; activity |
+| 20 min | Part 3: HashMap | Teach key-value pairs and hashing with code-along; activity |
+| 15 min | Big O Notation | Teach time complexity concepts with reference table |
+| 15 min | Part 3: HashSet | Teach unique-element collections with code-along; activity |
+| 15 min | Part 4: Comparison and Summary | Review all structures side by side using the comparison table |
+| 20 min | Wrap up | Recap key takeaways, Q&A, and preview assignment |
+| **Total** | | **180 min (3 hours)** |
