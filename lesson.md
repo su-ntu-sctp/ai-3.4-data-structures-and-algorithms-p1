@@ -31,6 +31,22 @@ Each structure comes with trade-offs: some provide faster lookups, while others 
 
 ---
 
+## Understanding Time Complexity and Big O Notation
+
+**Time complexity** measures how the runtime of an algorithm grows relative to input size. It allows developers to predict the scalability of their code. The **Big O notation** expresses this growth using mathematical symbols.
+
+| Big O | Name | Meaning | Example Operation |
+|-------|------|----------|-------------------|
+| O(1) | Constant | Takes the same time regardless of data size | Accessing an element by index in an array |
+| O(n) | Linear | Time increases proportionally with data | Searching an unsorted list |
+| O(log n) | Logarithmic | Time grows slowly even as data grows | Binary search in a sorted array |
+| O(n²) | Quadratic | Time grows rapidly as input increases | Nested loops |
+
+Understanding Big O helps programmers choose the right data structure. For example:
+- Accessing an item in an **ArrayList** is O(1).
+- Searching an **unsorted array** is O(n).
+- Retrieving data from a **HashMap** is typically O(1).
+
 ## Part 2: Linear Data Structures
 
 ### Arrays
@@ -231,24 +247,6 @@ Create a HashMap that stores three students and their scores (e.g. `"Alice" → 
 - Update a student's score using `.put()` with the same key.
 - Remove one student using `.remove()`.
 - Print the final HashMap.
-
----
-
-## Understanding Time Complexity and Big O Notation
-
-**Time complexity** measures how the runtime of an algorithm grows relative to input size. It allows developers to predict the scalability of their code. The **Big O notation** expresses this growth using mathematical symbols.
-
-| Big O | Name | Meaning | Example Operation |
-|-------|------|----------|-------------------|
-| O(1) | Constant | Takes the same time regardless of data size | Accessing an element by index in an array |
-| O(n) | Linear | Time increases proportionally with data | Searching an unsorted list |
-| O(log n) | Logarithmic | Time grows slowly even as data grows | Binary search in a sorted array |
-| O(n²) | Quadratic | Time grows rapidly as input increases | Nested loops |
-
-Understanding Big O helps programmers choose the right data structure. For example:
-- Accessing an item in an **ArrayList** is O(1).
-- Searching an **unsorted array** is O(n).
-- Retrieving data from a **HashMap** is typically O(1).
 
 ---
 
