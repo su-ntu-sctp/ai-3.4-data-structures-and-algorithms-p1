@@ -23,11 +23,6 @@ Create a program called DataStructuresAssignment.java and solve the following pr
    - Create a HashSet to store unique course codes (e.g., "CS101", "MATH201").
    - Add 5 course codes, including one duplicate, and display the unique courses.
 
-## Submission (Optional)
-
-- Submit the URL of the GitHub Repository that contains your work to NTU black board.
-- Should you reference the work of your classmate(s) or online resources, give them credit by adding either the name of your classmate or URL.
-
 ## References
 - Java: https://docs.oracle.com/javase/
 - Spring Boot: https://docs.spring.io/spring-boot/docs/current/reference/html/
