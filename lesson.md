@@ -623,7 +623,6 @@ It does not matter for **Map values** or **List elements**, because those are ne
 2. Create a `List<CatalogueItem>` and add at least six items. Include **two entries that are exactly identical**.
 3. Print the list and its size, and confirm the duplicate is present.
 4. Create a `Set<CatalogueItem>` from your list. Print its size and confirm the duplicate has been removed automatically.
-5. Build a `Map<String, CatalogueItem>` where the key is the item id, so any item can be looked up instantly. Print the item for one id.
 
 > **Note:** the record is named `CatalogueItem` rather than `Item` or `Product` so that it does not clash with any file you created earlier in this lesson.
 
