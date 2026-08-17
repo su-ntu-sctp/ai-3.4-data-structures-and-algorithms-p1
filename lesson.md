@@ -349,6 +349,29 @@ for (Map.Entry<String, Integer> entry : studentScores.entrySet()) {
 
 `entrySet()` gives you each pair as a `Map.Entry`, so you get both the key and the value in one pass. You can also use `keySet()` for keys only or `values()` for values only.
 
+#### Adding to a List Inside a Map — the Manual Way
+
+Before looking at `computeIfAbsent()`, it helps to see what it replaces.
+
+When a Map holds Lists as its values, you cannot add an item until a List actually exists for that key. So it takes two steps: create the List, then add to it.
+
+```java
+Map<String, List<String>> byCategory = new HashMap<>();
+
+// Step 1 — create the empty list once, and store it under the key
+byCategory.put("Electronics", new ArrayList<>());
+
+// Step 2 — get that list back, and add as many items as you like
+byCategory.get("Electronics").add("Laptop");
+byCategory.get("Electronics").add("Phone");
+byCategory.get("Electronics").add("Tablet");
+
+System.out.println(byCategory);
+// {Electronics=[Laptop, Phone, Tablet]}
+```
+
+`put()` creates the key and stores an empty list as its value. `get()` hands that list back so you can add to it.
+
 #### `computeIfAbsent()`
 
 This one is worth learning properly because it appears constantly in real code.
