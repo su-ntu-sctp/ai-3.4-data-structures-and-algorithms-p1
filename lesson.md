@@ -91,8 +91,8 @@ Notice that `Map` sits outside the `Collection` tree. This is deliberate — a `
 In professional Java code, you declare the variable using the **interface** and create the object using the **class**:
 
 ```java
-List<String> products = new ArrayList<>();
-Map<String, Integer> stock = new HashMap<>();
+List<String> productNames = new ArrayList<>();
+Map<String, Integer> stockLevels = new HashMap<>();
 Set<String> categories = new HashSet<>();
 ```
 
@@ -105,7 +105,7 @@ You will see this pattern in every production Java codebase.
 Since Java 10, you can let Java infer the type of a local variable:
 
 ```java
-var products = new ArrayList<String>();
+var productNames = new ArrayList<String>();
 ```
 
 This is common in modern codebases. It is only for local variables inside methods, and the type must still be clear from the right hand side. We will use it occasionally so you recognise it when you see it.
@@ -145,23 +145,23 @@ When the internal array fills up, Java creates a new larger array (roughly 1.5 t
 If you know roughly how many elements you will add, you can avoid repeated resizing:
 
 ```java
-List<String> products = new ArrayList<>(10000);
+List<String> productNames = new ArrayList<>(10000);
 ```
 
 #### Core Operations
 
 ```java
-List<String> products = new ArrayList<>();
-products.add("Laptop");
-products.add("Phone");
-products.add("Tablet");
+List<String> productNames = new ArrayList<>();
+productNames.add("Laptop");
+productNames.add("Phone");
+productNames.add("Tablet");
 
-System.out.println(products.get(0));        // Laptop
-System.out.println(products.size());        // 3
-System.out.println(products.contains("Phone")); // true
+System.out.println(productNames.get(0));        // Laptop
+System.out.println(productNames.size());        // 3
+System.out.println(productNames.contains("Phone")); // true
 
-products.remove("Phone");
-System.out.println(products);               // [Laptop, Tablet]
+productNames.remove("Phone");
+System.out.println(productNames);               // [Laptop, Tablet]
 ```
 
 #### Beyond the Basics
@@ -169,40 +169,40 @@ System.out.println(products);               // [Laptop, Tablet]
 These are the methods you will actually reach for in real code.
 
 ```java
-List<String> products = new ArrayList<>();
-products.add("Laptop");
-products.add("Phone");
-products.add("Tablet");
-products.add("Monitor");
+List<String> productNames = new ArrayList<>();
+productNames.add("Laptop");
+productNames.add("Phone");
+productNames.add("Tablet");
+productNames.add("Monitor");
 
 // set — replace the element at a position
-products.set(1, "Smartphone");
-System.out.println(products);          // [Laptop, Smartphone, Tablet, Monitor]
+productNames.set(1, "Smartphone");
+System.out.println(productNames);          // [Laptop, Smartphone, Tablet, Monitor]
 
 // add at a specific index — shifts everything after it to the right
-products.add(2, "Keyboard");
-System.out.println(products);          // [Laptop, Smartphone, Keyboard, Tablet, Monitor]
+productNames.add(2, "Keyboard");
+System.out.println(productNames);          // [Laptop, Smartphone, Keyboard, Tablet, Monitor]
 
 // indexOf — find the position of a value, returns -1 if not present
-System.out.println(products.indexOf("Tablet"));   // 3
-System.out.println(products.indexOf("Printer"));  // -1
+System.out.println(productNames.indexOf("Tablet"));   // 3
+System.out.println(productNames.indexOf("Printer"));  // -1
 
 // subList — a view of part of the list
-System.out.println(products.subList(0, 3));  // [Laptop, Smartphone, Keyboard]
+System.out.println(productNames.subList(0, 3));  // [Laptop, Smartphone, Keyboard]
 
 // addAll — append another collection
-products.addAll(List.of("Mouse", "Webcam"));
+productNames.addAll(List.of("Mouse", "Webcam"));
 
 // removeIf — remove everything matching a condition
-products.removeIf(p -> p.startsWith("M"));
-System.out.println(products);
+productNames.removeIf(p -> p.startsWith("M"));
+System.out.println(productNames);
 
 // sort the list alphabetically
-Collections.sort(products);
-System.out.println(products);
+Collections.sort(productNames);
+System.out.println(productNames);
 
 // reverse order
-Collections.sort(products, Collections.reverseOrder());
+Collections.sort(productNames, Collections.reverseOrder());
 ```
 
 > **Note on `removeIf()`:** the part inside the brackets, `p -> p.startsWith("M")`, is a **lambda**. Read it as "for each element p, is it true that p starts with M". Lambdas are covered properly in a later lesson. For now, recognise the shape.
@@ -211,13 +211,13 @@ Collections.sort(products, Collections.reverseOrder());
 
 ```java
 // Empty and mutable
-List<String> a = new ArrayList<>();
+List<String> emptyList = new ArrayList<>();
 
 // Fixed and unchangeable — Java 9 onwards
-List<String> b = List.of("Laptop", "Phone");
+List<String> fixedList = List.of("Laptop", "Phone");
 
 // Mutable copy of a fixed list
-List<String> c = new ArrayList<>(List.of("Laptop", "Phone"));
+List<String> mutableCopy = new ArrayList<>(List.of("Laptop", "Phone"));
 ```
 
 `List.of()` creates an **immutable** list. Calling `.add()` on it throws an `UnsupportedOperationException` at runtime. This is intentional — immutable collections are safer to pass around because nothing can modify them unexpectedly. When you need to modify, wrap it in `new ArrayList<>()` as shown above.
@@ -322,19 +322,19 @@ All three map types implement the `Map` interface. They store key and value pair
 #### HashMap
 
 ```java
-Map<String, Integer> scores = new HashMap<>();
-scores.put("Alice", 85);
-scores.put("Bob", 92);
-scores.put("Charlie", 78);
+Map<String, Integer> studentScores = new HashMap<>();
+studentScores.put("Alice", 85);
+studentScores.put("Bob", 92);
+studentScores.put("Charlie", 78);
 
 // getOrDefault — returns a fallback if the key is missing
-System.out.println(scores.getOrDefault("David", 0));   // 0
+System.out.println(studentScores.getOrDefault("David", 0));   // 0
 
 // putIfAbsent — only adds if the key is not already there
-scores.putIfAbsent("Alice", 99);
-System.out.println(scores.get("Alice"));               // 85, unchanged
+studentScores.putIfAbsent("Alice", 99);
+System.out.println(studentScores.get("Alice"));               // 85, unchanged
 
-System.out.println(scores);   // order not guaranteed
+System.out.println(studentScores);   // order not guaranteed
 ```
 
 > **Key rule:** keys must be unique. Putting the same key again **overwrites** the existing value rather than creating a second entry. Values may repeat freely.
@@ -342,7 +342,7 @@ System.out.println(scores);   // order not guaranteed
 #### Iterating a Map
 
 ```java
-for (Map.Entry<String, Integer> entry : scores.entrySet()) {
+for (Map.Entry<String, Integer> entry : studentScores.entrySet()) {
     System.out.println(entry.getKey() + " scored " + entry.getValue());
 }
 ```
@@ -387,12 +387,12 @@ This pattern — a Map whose values are Lists — is extremely common. Any time 
 #### LinkedHashMap
 
 ```java
-Map<String, Integer> scores = new LinkedHashMap<>();
-scores.put("Alice", 85);
-scores.put("Bob", 92);
-scores.put("Charlie", 78);
+Map<String, Integer> examResults = new LinkedHashMap<>();
+examResults.put("Alice", 85);
+examResults.put("Bob", 92);
+examResults.put("Charlie", 78);
 
-for (Map.Entry<String, Integer> entry : scores.entrySet()) {
+for (Map.Entry<String, Integer> entry : examResults.entrySet()) {
     System.out.println(entry.getKey() + " scored " + entry.getValue());
 }
 // Always in insertion order:
@@ -406,16 +406,16 @@ for (Map.Entry<String, Integer> entry : scores.entrySet()) {
 #### TreeMap
 
 ```java
-TreeMap<String, Integer> scores = new TreeMap<>();
-scores.put("Charlie", 78);
-scores.put("Alice", 85);
-scores.put("Bob", 92);
+TreeMap<String, Integer> rankings = new TreeMap<>();
+rankings.put("Charlie", 78);
+rankings.put("Alice", 85);
+rankings.put("Bob", 92);
 
-System.out.println(scores.firstKey());          // Alice
-System.out.println(scores.lastKey());           // Charlie
-System.out.println(scores.headMap("Charlie"));  // {Alice=85, Bob=92}
+System.out.println(rankings.firstKey());          // Alice
+System.out.println(rankings.lastKey());           // Charlie
+System.out.println(rankings.headMap("Charlie"));  // {Alice=85, Bob=92}
 
-System.out.println(scores);   // {Alice=85, Bob=92, Charlie=78} always sorted
+System.out.println(rankings);   // {Alice=85, Bob=92, Charlie=78} always sorted
 ```
 
 `firstKey()`, `lastKey()`, and `headMap()` exist only on TreeMap, because only TreeMap guarantees an order to work with.
@@ -496,151 +496,161 @@ System.out.println(combined);
 #### TreeSet
 
 ```java
-TreeSet<String> categories = new TreeSet<>(
+TreeSet<String> sortedCategories = new TreeSet<>(
     List.of("Furniture", "Electronics", "Clothing"));
 
-System.out.println(categories.first());                    // Clothing
-System.out.println(categories.last());                     // Furniture
-System.out.println(categories.headSet("Furniture"));       // [Clothing, Electronics]
-System.out.println(categories.subSet("Clothing", "Furniture")); // [Clothing, Electronics]
+System.out.println(sortedCategories.first());                    // Clothing
+System.out.println(sortedCategories.last());                     // Furniture
+System.out.println(sortedCategories.headSet("Furniture"));       // [Clothing, Electronics]
+System.out.println(sortedCategories.subSet("Clothing", "Furniture")); // [Clothing, Electronics]
 
-System.out.println(categories);   // [Clothing, Electronics, Furniture] always sorted
+System.out.println(sortedCategories);   // [Clothing, Electronics, Furniture] always sorted
 ```
 
 ---
 
 ## Part 5: Working With Your Own Objects
 
-Everything so far has used Strings and numbers. Real applications store your own objects — products, customers, orders. This introduces something you need to know about.
+Everything so far has stored Strings and numbers. Real applications store your own objects — products, customers, orders. That introduces something you need to know about.
 
 ### The Problem
 
-Suppose you write a simple class to hold a product:
+Suppose you write an ordinary class to hold an item — an id, a name, and a price. Nothing unusual about it.
+
+Now put two identical items into a Set:
 
 ```java
-class Product {
-    String id;
-    String name;
-    double price;
+Set<Item> items = new HashSet<>();
+items.add(new Item("P1", "Laptop", 999.0));
+items.add(new Item("P1", "Laptop", 999.0));   // exactly the same data
 
-    Product(String id, String name, double price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-    }
-}
+System.out.println(items.size());   // 2 — the duplicate was NOT removed
 ```
 
-Now put two identical products into a Set:
+Same id, same name, same price. Yet the Set kept both.
+
+**Why?** Because by default Java compares objects by their **memory address**, not by the values inside them. You called `new` twice, so there are two objects sitting at two different addresses. As far as Java is concerned they are two different things, and the Set's uniqueness check never had a chance.
+
+### What Is a Record?
+
+A **record is just a class** — a shorter kind of class, built for one job: holding data.
+
+Think about what you normally write for a data class. Private fields, a constructor, a getter for every field, a `toString()`. Thirty or forty lines, almost all of it boilerplate.
+
+A record collapses all of that into one line:
 
 ```java
-Set<Product> products = new HashSet<>();
-products.add(new Product("P1", "Laptop", 999.0));
-products.add(new Product("P1", "Laptop", 999.0));   // exactly the same data
-
-System.out.println(products.size());   // 2 — the duplicate was NOT removed
+record Item(String id, String name, double price) { }
 ```
 
-The Set contains both. Same id, same name, same price — but Java treated them as two different things.
+Java reads that and generates the fields, the constructor, the getters, `toString()`, and the logic for comparing one item to another.
 
-**Why?** Because by default, Java compares objects by their **memory address**, not by their contents. Two separately created objects live at two different addresses, so Java considers them different. The Set's uniqueness check never had a chance.
+When you write `new Item("P1", "Laptop", 999.0)` you are creating an ordinary object, exactly as with any class. A thousand of those is a thousand objects.
 
-To fix this properly, a class must define two methods: `equals()`, which says what makes two objects equal, and `hashCode()`, which produces the number the Set and Map use to place the object. Writing these correctly by hand is fiddly and easy to get wrong.
+> **Note:** Records are covered fully in a later lesson. For now you only need to know that a record is a short way to write a data class, and that it comes with correct comparison behaviour built in.
 
-### The Modern Solution: Records
+### The Fix
 
-Since Java 16, you can declare a **record** instead. A record is a class whose only job is to hold data. Java generates the constructor, the getters, `toString()`, `equals()`, and `hashCode()` for you, correctly.
+Run exactly the same code, but with `Item` declared as a record:
 
 ```java
-record Product(String id, String name, double price) { }
+record Item(String id, String name, double price) { }
+
+Set<Item> items = new HashSet<>();
+items.add(new Item("P1", "Laptop", 999.0));
+items.add(new Item("P1", "Laptop", 999.0));
+
+System.out.println(items.size());   // 1 — duplicate correctly removed
 ```
 
-That single line replaces the whole class above. Now:
+The duplicate disappears.
+
+**The difference in one sentence:** a record knows how to compare itself by its values. A plain class does not, so the Set saw two different things.
+
+### Two Things to Know
+
+**Getters have no `get` prefix.** It is `item.name()`, not `item.getName()`.
 
 ```java
-Set<Product> products = new HashSet<>();
-products.add(new Product("P1", "Laptop", 999.0));
-products.add(new Product("P1", "Laptop", 999.0));
+Item laptop = new Item("P1", "Laptop", 999.0);
 
-System.out.println(products.size());   // 1 — duplicate correctly removed
-```
-
-The duplicate disappears, because the record's generated `equals()` compares the actual values.
-
-### Using Records
-
-```java
-record Product(String id, String name, double price) { }
-
-Product laptop = new Product("P1", "Laptop", 999.0);
-
-System.out.println(laptop.name());    // Laptop  — note: name(), not getName()
+System.out.println(laptop.name());    // Laptop
 System.out.println(laptop.price());   // 999.0
-System.out.println(laptop);           // Product[id=P1, name=Laptop, price=999.0]
+System.out.println(laptop);           // Item[id=P1, name=Laptop, price=999.0]
 ```
 
-Records are **immutable** — once created, the values cannot be changed. This is a feature, not a limitation. It makes them safe to use as Map keys and Set elements, because a key whose value can change underneath you causes very hard bugs.
+**Records are immutable.** Once created, the values cannot change. There are no setters. If you need different values, you create a new object. That is exactly why records are safe as Map keys — a key whose value changed underneath you would no longer be found where it was stored.
 
-> **The practical rule:** if you are storing your own objects in a `Set`, or using them as keys in a `Map`, make them a `record`. You get correct behaviour for free.
+### When Does This Actually Matter?
 
----
+The rule is narrower than "always use records". It applies to objects Java has to **compare**:
 
-### 👨‍💻 Activity 3: The Product Catalogue **(15 minutes)**
+- **Set elements** — the Set compares elements to enforce uniqueness
+- **Map keys** — the Map compares keys to find the right entry
 
-1. Create a `record Product(String id, String name, double price)`.
-2. Create a `List<Product>` and add at least six products. Include **two entries that are exactly identical**.
-3. Print the list and confirm the duplicate is present.
-4. Create a `Set<Product>` from your list. Print it and confirm the duplicate has been removed automatically.
-5. Build a `Map<String, Product>` where the key is the product id, so any product can be looked up instantly by id. Print the product for one id.
-6. Group your products into a `Map<String, List<Product>>` by a category of your choosing, using `computeIfAbsent()`.
+It does not matter for **Map values** or **List elements**, because those are never compared for uniqueness.
+
+> **The rule:** if Java needs to compare your object to decide "have I seen this one before?", make it a record.
+
+> **Note:** If you created a file earlier in this lesson that declares a class with the same name, delete or rename it first. Two files declaring the same type in one folder will not compile.
+
+### 👨‍💻 Activity 3: The Product Catalogue **(10 minutes)**
+
+1. Create a `record CatalogueItem(String id, String name, double price)`.
+2. Create a `List<CatalogueItem>` and add at least six items. Include **two entries that are exactly identical**.
+3. Print the list and its size, and confirm the duplicate is present.
+4. Create a `Set<CatalogueItem>` from your list. Print its size and confirm the duplicate has been removed automatically.
+5. Build a `Map<String, CatalogueItem>` where the key is the item id, so any item can be looked up instantly. Print the item for one id.
+
+> **Note:** the record is named `CatalogueItem` rather than `Item` or `Product` so that it does not clash with any file you created earlier in this lesson.
 
 ---
 
 ## 🔵 Optional: Sorting With Comparators
 
-> Cover this if time allows.
+> These final two sections are covered in Lesson 3.5, alongside sorting algorithms. They are included here for reference.
 
 TreeMap and TreeSet sort by natural order. To sort by something else, you supply a **Comparator**.
 
 ```java
-record Product(String id, String name, double price) { }
+record CatalogueItem(String id, String name, double price) { }
 
-List<Product> products = new ArrayList<>(List.of(
-    new Product("P1", "Laptop", 999.0),
-    new Product("P2", "Phone", 499.0),
-    new Product("P3", "Tablet", 499.0)
+List<CatalogueItem> catalogue = new ArrayList<>(List.of(
+    new CatalogueItem("P1", "Laptop", 999.0),
+    new CatalogueItem("P2", "Phone", 499.0),
+    new CatalogueItem("P3", "Tablet", 499.0)
 ));
 
 // Sort by price, lowest first
-products.sort(Comparator.comparing(Product::price));
+catalogue.sort(Comparator.comparing(CatalogueItem::price));
 
 // Sort by price, then by name where prices are equal
-products.sort(Comparator.comparing(Product::price)
-                        .thenComparing(Product::name));
+catalogue.sort(Comparator.comparing(CatalogueItem::price)
+                         .thenComparing(CatalogueItem::name));
 
 // Highest price first
-products.sort(Comparator.comparing(Product::price).reversed());
+catalogue.sort(Comparator.comparing(CatalogueItem::price).reversed());
 ```
 
-`Product::price` is a **method reference**. It is shorthand for "take each product and get its price". Comparators and method references are covered fully in a later lesson — for now, recognise the pattern, because this is how sorting is written in modern Java.
+`CatalogueItem::price` is a **method reference**. It is shorthand for "take each item and get its price". Comparators and method references are covered fully in a later lesson — for now, recognise the pattern, because this is how sorting is written in modern Java.
 
 ---
 
 ## 🔵 Optional: Sequenced Collections (Java 21)
 
-> Cover this if time allows.
+> Covered in Lesson 3.5. Included here for reference.
 
 Java 21 added a shared set of methods to collections that have a defined order — `List`, `LinkedHashMap`, and `LinkedHashSet`.
 
 ```java
-List<String> products = new ArrayList<>(List.of("Laptop", "Phone", "Tablet"));
+List<String> catalogue = new ArrayList<>(List.of("Laptop", "Phone", "Tablet"));
 
-System.out.println(products.getFirst());   // Laptop
-System.out.println(products.getLast());    // Tablet
-System.out.println(products.reversed());   // [Tablet, Phone, Laptop]
+System.out.println(catalogue.getFirst());   // Laptop
+System.out.println(catalogue.getLast());    // Tablet
+System.out.println(catalogue.reversed());   // [Tablet, Phone, Laptop]
 ```
 
-Previously you had to write `products.get(0)` and `products.get(products.size() - 1)`. These methods make the intent clearer and work consistently across ordered collections.
+Previously you had to write `productNames.get(0)` and `productNames.get(productNames.size() - 1)`. These methods make the intent clearer and work consistently across ordered collections.
 
 ---
 
@@ -686,7 +696,7 @@ Then, if you chose a Map or a Set:
 - LinkedList and ArrayDeque are built for adding and removing at the ends. Prefer `ArrayDeque` over `Stack`.
 - HashMap and HashSet use hashing for fast lookup, at the cost of ordering.
 - LinkedHashMap and LinkedHashSet preserve insertion order. TreeMap and TreeSet keep data sorted.
-- Use a `record` for objects stored in Sets or used as Map keys — it gives you correct `equals()` and `hashCode()` automatically.
+- Use a `record` for objects stored in Sets or used as Map keys — it compares by value, so duplicates are detected correctly.
 - Default to `ArrayList` and `HashMap`, and change only when you have a reason.
 
 ---
