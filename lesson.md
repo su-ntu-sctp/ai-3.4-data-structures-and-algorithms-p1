@@ -731,6 +731,24 @@ Previously you had to write `catalogue.get(0)` and `catalogue.get(catalogue.size
 
 ---
 
+## Activity: Stock Check **(12 minutes)**
+
+A shop tracks how many of each product is in stock.
+
+1. Create a `Map<String, Integer>` called `stockLevels` and add five products
+   with their quantities. Make sure two of them are under 10.
+
+2. Using `entrySet()`, print every product and its quantity.
+
+3. Using `entrySet()` again, print only the products with fewer than 10 in stock,
+   as a low-stock warning.
+
+4. Using `values()`, add up all the quantities and print the total.
+
+5. Copy the whole thing into a `TreeMap` with
+   `Map<String, Integer> sortedStock = new TreeMap<>(stockLevels);`
+   and print it again. What changed?
+
 ## Part 7: Comparison and Summary
 
 | Data Structure | Type | Ordered | Duplicates | Fast at | Slower at |
