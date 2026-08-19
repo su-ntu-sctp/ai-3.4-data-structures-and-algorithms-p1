@@ -628,11 +628,33 @@ It does not matter for **Map values** or **List elements**, because those are ne
 
 ---
 
-## 🔵 Optional: Sorting With Comparators
+## Part 6: Sorting With Comparators
 
-> These final two sections are covered in Lesson 3.5, alongside sorting algorithms. They are included here for reference.
+Java gives you two methods for sorting, and which one you use depends on what you are sorting.
 
-TreeMap and TreeSet sort by natural order. To sort by something else, you supply a **Comparator**.
+- **`Arrays.sort()`** — for arrays. `int[]`, `String[]`, anything with square brackets.
+- **`Collections.sort()`** — for Lists. ArrayList, LinkedList.
+
+Both sort **in place**. They modify what you give them and return nothing. Writing
+`numbers = Arrays.sort(numbers);` is a compile error, and it is a common first attempt.
+
+```java
+int[] prices = {999, 299, 499};
+Arrays.sort(prices);                  // [299, 499, 999]
+
+List<String> names = new ArrayList<>(List.of("Phone", "Laptop", "Tablet"));
+Collections.sort(names);              // [Laptop, Phone, Tablet]
+```
+
+Both of those worked without any extra effort because Strings and numbers already know how to
+order themselves. That built-in ordering is called **natural ordering** — alphabetical for
+Strings, numerical for numbers.
+
+Your own objects do not have one. A `CatalogueItem` has an id, a name and a price, and Java has no
+way of knowing which one you want to sort by. **You have to tell it**, and the thing you use to
+tell it is a **Comparator**.
+
+A Comparator is simply a rule for deciding order.
 
 ```java
 record CatalogueItem(String id, String name, double price) { }
@@ -645,7 +667,33 @@ List<CatalogueItem> catalogue = new ArrayList<>(List.of(
 
 // Sort by price, lowest first
 catalogue.sort(Comparator.comparing(CatalogueItem::price));
+```
 
+Read that last line in plain English: *sort these, comparing by price.*
+
+### What `::` means
+
+`CatalogueItem::price` is a **method reference**. It is shorthand for "take each item and get its
+price". The longer way of writing exactly the same thing is a lambda:
+
+```java
+Comparator.comparing(item -> item.price())     // the long form
+Comparator.comparing(CatalogueItem::price)     // the same thing, shorter
+```
+
+The pattern is `ClassName::methodName`, and it means "call this method on each element".
+
+Note that you are not calling the method yourself — there are no brackets after `price`. You are
+handing the method over for Java to call later, once per element.
+
+> **Note:** Method references and lambdas are covered fully in a later lesson. For now, recognise
+> the shape.
+
+### Chaining and reversing
+
+Two more things you will use constantly.
+
+```java
 // Sort by price, then by name where prices are equal
 catalogue.sort(Comparator.comparing(CatalogueItem::price)
                          .thenComparing(CatalogueItem::name));
@@ -654,7 +702,14 @@ catalogue.sort(Comparator.comparing(CatalogueItem::price)
 catalogue.sort(Comparator.comparing(CatalogueItem::price).reversed());
 ```
 
-`CatalogueItem::price` is a **method reference**. It is shorthand for "take each item and get its price". Comparators and method references are covered fully in a later lesson — for now, recognise the pattern, because this is how sorting is written in modern Java.
+`thenComparing()` is the tie-breaker — it is only used when the first comparison comes out equal.
+`reversed()` flips the whole order.
+
+These chains read left to right like a sentence: *comparing by price, then by name, reversed.*
+That readability is why this style replaced the older way of writing comparators.
+
+> **Note:** `list.sort(...)` and `Collections.sort(list, ...)` both work and do the same thing.
+> `list.sort()` is the newer form and is generally preferred in modern code.
 
 ---
 
@@ -672,11 +727,11 @@ System.out.println(catalogue.getLast());    // Tablet
 System.out.println(catalogue.reversed());   // [Tablet, Phone, Laptop]
 ```
 
-Previously you had to write `productNames.get(0)` and `productNames.get(productNames.size() - 1)`. These methods make the intent clearer and work consistently across ordered collections.
+Previously you had to write `catalogue.get(0)` and `catalogue.get(catalogue.size() - 1)`. These methods make the intent clearer and work consistently across ordered collections.
 
 ---
 
-## Part 6: Comparison and Summary
+## Part 7: Comparison and Summary
 
 | Data Structure | Type | Ordered | Duplicates | Fast at | Slower at |
 |----------------|------|---------|------------|---------|-----------|
