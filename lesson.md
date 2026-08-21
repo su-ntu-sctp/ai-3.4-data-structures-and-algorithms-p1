@@ -749,6 +749,9 @@ A shop tracks how many of each product is in stock.
    `Map<String, Integer> sortedStock = new TreeMap<>(stockLevels);`
    and print it again. What changed?
 
+6. Group the products into two lists — **"Low stock"** for anything under 10, and **"Well stocked"** for everything else. Use a `Map<String, List<String>>` and `computeIfAbsent()`. Print the whole grouped map, then print just the low stock list.
+    
+
 ## Part 7: Comparison and Summary
 
 | Data Structure | Type | Ordered | Duplicates | Fast at | Slower at |
